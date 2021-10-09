@@ -3,3 +3,6 @@ tmp
 .vscode
 .DS_Store
 config.json
+.venv
+__pycache__/
+*.py[cod]

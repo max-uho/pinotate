@@ -128,11 +128,12 @@ class IBooksDispatcher(object):
         cur = conn.cursor()
         a_id = (asset_id,)
         highlights = []
-        for row, heading, created, location in cur.execute(
+        for row, heading, created, location, note in cur.execute(
             """SELECT ZANNOTATIONSELECTEDTEXT, 
                       ZFUTUREPROOFING5, 
                       ZANNOTATIONCREATIONDATE, 
-                      ZANNOTATIONLOCATION 
+                      ZANNOTATIONLOCATION,
+                      ZANNOTATIONNOTE 
                 FROM ZAEANNOTATION 
                 WHERE ZANNOTATIONASSETID=? 
                 AND ZANNOTATIONSELECTEDTEXT <> '' 
@@ -143,7 +144,7 @@ class IBooksDispatcher(object):
                 ref_in_chapter = int(location.split('!')[1].split('/')[2].replace(',', ''))
             except ValueError:
                 ref_in_chapter = 0
-            highligt = Highlight(row, heading, float(created), chapter, ref_in_chapter)
+            highligt = Highlight(row, heading, float(created), chapter, ref_in_chapter, note)
             highlights.append(highligt)
         conn.close()
         return highlights
