@@ -144,8 +144,8 @@ class IBooksDispatcher(object):
                 ref_in_chapter = int(location.split('!')[1].split('/')[2].replace(',', ''))
             except ValueError:
                 ref_in_chapter = 0
-            highligt = Highlight(row, heading, float(created), chapter, ref_in_chapter, note)
-            highlights.append(highligt)
+            highlight = Highlight(row, heading, float(created), location, chapter, ref_in_chapter, note)
+            highlights.append(highlight)
         conn.close()
         return highlights
 
