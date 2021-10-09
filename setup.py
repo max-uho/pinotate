@@ -5,6 +5,6 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pinotate",
-    version="0.0.0",
+    version="0.0.1",
     packages=setuptools.find_packages(),
 )
