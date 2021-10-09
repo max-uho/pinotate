@@ -15,7 +15,7 @@ def datetime_to_local(seconds_since_ref_date):
     from_zone = tz.tzutc()
     to_zone = tz.tzlocal()
     utc = utc.replace(tzinfo=from_zone)
-    return utc.astimezone(to_zone).strftime('%c')
+    return utc.astimezone(to_zone).strftime('%d %b %Y at %H:%M')
 
 def generate_md(title, highlights, with_headings=True, normal_sorting=True):
     text = '# {}\n\n'.format(title)    
