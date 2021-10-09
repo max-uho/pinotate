@@ -145,7 +145,7 @@ class IBooksDispatcher(object):
             except ValueError:
                 ref_in_chapter = 0
             short_location = location.split(":")[-1].strip(")")
-            highlight = Highlight(row, heading, float(created), location, short_location, chapter, ref_in_chapter, note)
+            highlight = Highlight(row, heading, float(created), location, int(short_location), chapter, ref_in_chapter, note)
             highlights.append(highlight)
         conn.close()
         return highlights
