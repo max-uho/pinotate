@@ -1,1 +1,1 @@
-name = 'pinotate_max_uho'
+name = 'pinotate'
