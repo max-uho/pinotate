@@ -75,7 +75,7 @@ class IBooksDispatcher(object):
             src = os.path.join(db_dir, dfile)
             dst = os.path.join(self.tmp_dir, dfile)
             shutil.copy(src, dst)
-            if dfile.endswith(".sqlite"):
+            if dfile.endswith(".sqlite-wal"):
                 db_fullname = dst
         
         return db_fullname
