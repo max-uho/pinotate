@@ -1,3 +1,6 @@
+This fork is used for another project which uses Pinotate's core module with a few alterations.
+
+
 Pinotate
 ========
 
