@@ -26,7 +26,8 @@ def openFolder():
     #… there are lots of options, you see where this is going…
     if panel.runModal() == NSOKButton:
         return panel.directory()
-    return 
+    else:
+        return None
 
 class IBooksDispatcher(object):
     """
@@ -45,31 +46,38 @@ class IBooksDispatcher(object):
         self.library_folder = 'BKLibrary'
         self.annotation_folder = 'AEAnnotation'
         self.tmp_dir = './tmp'
+        self.res_config = True
         if not os.path.exists(self.config_file):
-            self.__write_config()
+            self.res_config = self.__write_config()
         self.__read_config()
 
     def __write_config(self):
         """
         Save application configuration file
         """
-        output_folder = openFolder()+"/"
+        output_folder = openFolder()
         
-        if not output_folder:
-            print("error with output folder")
+        if output_folder:
+
+            output_folder =+ "/"
+
+            with open(self.config_file, 'w') as data_file:
+                config = {"ibooks_doc_root":self.ibooks_doc_root,
+                "library_folder":self.library_folder,
+                "annotation_folder":self.annotation_folder,
+                "tmp_dir":self.tmp_dir,
+                "output_folder":output_folder
+                } 
+                data = json.dumps(config, ensure_ascii=False)
+                data_file.write(data)
+
+            return True
+
         else:
-            print("all good with output folder")
 
-
-        with open(self.config_file, 'w') as data_file:
-            config = {"ibooks_doc_root":self.ibooks_doc_root,
-            "library_folder":self.library_folder,
-            "annotation_folder":self.annotation_folder,
-            "tmp_dir":self.tmp_dir,
-            "output_folder":output_folder
-            } 
-            data = json.dumps(config, ensure_ascii=False)
-            data_file.write(data)            
+            print("Error: No output folder")
+            return False
+                  
 
     def __read_config(self):
         """

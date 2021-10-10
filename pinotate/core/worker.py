@@ -12,6 +12,7 @@ __copyright__ = 'Copyright 2020, Galarius'
 class IBooksWorker (object):
     def __init__(self):
         self.dispatcher = IBooksDispatcher()
+        self.res_config = self.dispatcher.res_config
         self.lib_db = self.dispatcher.find_library_db()
         self.ann_db = self.dispatcher.find_annotation_db()
         self.__assert_db()
