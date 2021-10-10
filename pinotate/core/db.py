@@ -15,30 +15,18 @@ import json
 import sys
 import os
 
-from Cocoa import NSOpenPanel, NSOKButton
-
-def openFolder():
-    panel = NSOpenPanel.openPanel()
-    panel.setCanCreateDirectories_(True)
-    panel.setCanChooseDirectories_(True)
-    panel.setCanChooseFiles_(False)
-    panel.setTitle_("Choose output folder")
-    #… there are lots of options, you see where this is going…
-    if panel.runModal() == NSOKButton:
-        return panel.directory()
-    else:
-        return None
-
 class IBooksDispatcher(object):
     """
     Class to perform operations on iBooks database
     """
-    def __init__(self):
+    def __init__(self,output_folder):
         """
-        Initialize application, create config file: 
+        Initialize application, create config file:
         """
+        self.output_folder = output_folder
         self.home = os.path.expanduser("~")
         pref_folder = './'
+        
         if not os.path.exists(pref_folder):
             os.mkdir(pref_folder)
         self.config_file = os.path.join(pref_folder, 'config.json')
@@ -46,38 +34,29 @@ class IBooksDispatcher(object):
         self.library_folder = 'BKLibrary'
         self.annotation_folder = 'AEAnnotation'
         self.tmp_dir = './tmp'
-        self.res_config = True
+
         if not os.path.exists(self.config_file):
-            self.res_config = self.__write_config()
-        if self.res_config:
-            self.__read_config()
+            self.__write_config()
+
 
     def __write_config(self):
         """
         Save application configuration file
         """
-        output_folder = openFolder()
-        
-        if output_folder:
 
-            output_folder =+ "/"
+        output_folder = self.output_folder
 
-            with open(self.config_file, 'w') as data_file:
-                config = {"ibooks_doc_root":self.ibooks_doc_root,
-                "library_folder":self.library_folder,
-                "annotation_folder":self.annotation_folder,
-                "tmp_dir":self.tmp_dir,
-                "output_folder":output_folder
-                } 
-                data = json.dumps(config, ensure_ascii=False)
-                data_file.write(data)
+        with open(self.config_file, 'w') as data_file:
+            config = {"ibooks_doc_root":self.ibooks_doc_root,
+            "library_folder":self.library_folder,
+            "annotation_folder":self.annotation_folder,
+            "tmp_dir":self.tmp_dir,
+            "output_folder":output_folder
+            } 
+            data = json.dumps(config, ensure_ascii=False)
+            data_file.write(data)
 
-            return True
-
-        else:
-
-            print("Error: No output folder")
-            return False
+        return True
                   
 
     def __read_config(self):
