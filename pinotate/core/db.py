@@ -127,6 +127,19 @@ class IBooksDispatcher(object):
         conn.close()
         return asset_id
 
+    def get_book_author(self, lib_db, book_title, enc=sys.stdin.encoding):
+        """
+        Find author by book title
+        @return author or null
+        """
+        conn = sqlite3.connect(lib_db)
+        cur = conn.cursor()
+        cur.execute("SELECT ZAUTHOR FROM ZBKLIBRARYASSET WHERE ZTITLE=?", (book_title,))
+        result = cur.fetchone()
+        author = result[0] if result else None
+        conn.close()
+        return author
+
     def get_highlights(self, ann_db, asset_id):
         """
         Get highlights from annotation id by book's asset_id

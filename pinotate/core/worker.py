@@ -34,6 +34,9 @@ class IBooksWorker (object):
     def asset_id(self, title):
         return self.dispatcher.get_book_asset_id(self.lib_db, title)
 
+    def author(self, title):
+        return self.dispatcher.get_book_author(self.lib_db, title)
+
     def highlights(self, asset_id):
         return self.dispatcher.get_highlights(self.ann_db, asset_id)
 
