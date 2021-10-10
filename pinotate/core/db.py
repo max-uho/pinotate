@@ -22,7 +22,7 @@ def openFolder():
     panel.setCanCreateDirectories_(True)
     panel.setCanChooseDirectories_(True)
     panel.setCanChooseFiles_(False)
-    panel.setTitle_(title or _("Choose output folder"))
+    panel.setTitle_("Choose output folder")
     #… there are lots of options, you see where this is going…
     if panel.runModal() == NSOKButton:
         return panel.directory()
