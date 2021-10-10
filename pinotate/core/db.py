@@ -49,7 +49,8 @@ class IBooksDispatcher(object):
         self.res_config = True
         if not os.path.exists(self.config_file):
             self.res_config = self.__write_config()
-        self.__read_config()
+        if self.res_config:
+            self.__read_config()
 
     def __write_config(self):
         """

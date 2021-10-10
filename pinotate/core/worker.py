@@ -18,8 +18,7 @@ class IBooksWorker (object):
         self.__assert_db()
 
     def __del__(self):
-        if self.dispatcher:
-            self.dispatcher.clear()    
+        self.dispatcher.clear()    
 
     def __assert_db(self):
         if not self.lib_db:
