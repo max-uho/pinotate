@@ -15,6 +15,18 @@ import json
 import sys
 import os
 
+from Cocoa import NSOpenPanel, NSOKButton
+
+def openFolder():
+    panel = NSOpenPanel.openPanel()
+    panel.setCanCreateDirectories_(True)
+    panel.setCanChooseDirectories_(True)
+    panel.setCanChooseFiles_(False)
+    #… there are lots of options, you see where this is going…
+    if panel.runModal() == NSOKButton:
+        return panel.directory()
+    return 
+
 class IBooksDispatcher(object):
     """
     Class to perform operations on iBooks database
@@ -40,11 +52,20 @@ class IBooksDispatcher(object):
         """
         Save application configuration file
         """
+        output_folder = openFolder()+"/"
+        
+        if not output_folder:
+            print("error with output folder")
+        else:
+            print("all good with output folder")
+
+
         with open(self.config_file, 'w') as data_file:
             config = {"ibooks_doc_root":self.ibooks_doc_root,
             "library_folder":self.library_folder,
             "annotation_folder":self.annotation_folder,
-            "tmp_dir":self.tmp_dir
+            "tmp_dir":self.tmp_dir,
+            "output_folder":output_folder
             } 
             data = json.dumps(config, ensure_ascii=False)
             data_file.write(data)            
