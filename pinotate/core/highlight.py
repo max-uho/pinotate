@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 class Highlight:
-    def __init__(self, text, heading, created, location, short_location, chapter, note):
+    def __init__(self, text, heading, created, location, short_location, chapter, note, style):
         self.text = text
         self.heading = heading
         self.created = created
@@ -9,3 +9,4 @@ class Highlight:
         self.short_location = short_location
         self.chapter = chapter
         self.note = note
+        self.style = style

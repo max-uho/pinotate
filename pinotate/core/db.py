@@ -151,12 +151,13 @@ class IBooksDispatcher(object):
         cur = conn.cursor()
         a_id = (asset_id,)
         highlights = []
-        for row, heading, created, location, note, chapter in cur.execute(
+        for row, heading, created, location, note, style, chapter in cur.execute(
             """SELECT ZANNOTATIONSELECTEDTEXT, 
                       ZFUTUREPROOFING5, 
                       ZANNOTATIONCREATIONDATE, 
                       ZANNOTATIONLOCATION,
                       ZANNOTATIONNOTE,
+                      ZANNOTATIONSTYLE,
                       ZFUTUREPROOFING5 
                 FROM ZAEANNOTATION 
                 WHERE ZANNOTATIONASSETID=? 
@@ -165,7 +166,7 @@ class IBooksDispatcher(object):
             """, a_id):
 
             short_location = location.split(":")[-1].split(",")[0].strip(")")
-            highlight = Highlight(row, heading, float(created), location, int(short_location), chapter, note)
+            highlight = Highlight(row, heading, float(created), location, int(short_location), chapter, note, style)
             highlights.append(highlight)
         conn.close()
         return highlights
